@@ -38,6 +38,16 @@ const EditMovieForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios
+      .put(`http://localhost:5000/api/movies/${id}`, movie)
+      .then((res) => {
+        console.log("PUT edit movie res: ", res);
+        props.setMovies(res.data);
+        push(`/movies/${id}`);
+      })
+      .catch((err) => {
+        console.log("PUT edit movie err: ");
+      });
   };
 
   const { title, director, genre, metascore, description } = movie;
@@ -103,8 +113,13 @@ const EditMovieForm = (props) => {
             </div>
           </div>
           <div className="modal-footer">
-            <input type="submit" className="btn btn-info" value="Save" />
-            <Link to={`/movies/1`}>
+            <input
+              onClick={handleSubmit}
+              type="submit"
+              className="btn btn-info"
+              value="Save"
+            />
+            <Link to={`/movies/${id}`}>
               <input type="button" className="btn btn-default" value="Cancel" />
             </Link>
           </div>
