@@ -19,16 +19,20 @@ const App = (props) => {
     axios
       .get("http://localhost:5000/api/movies")
       .then((res) => {
+        console.log("New GET request in useEffect");
         setMovies(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [movies]);
+  }, []);
 
   const deleteMovie = (id) => {
     console.log("delete movie with id: ", id);
-    const updatedMovies = movies.filter((movie) => movie.id !== id);
+    const updatedMovies = movies.filter(
+      (movie) => movie.id.toString() !== id.toString()
+    );
+    console.log("updatedMovies: ", updatedMovies);
     setMovies(updatedMovies);
   };
 
