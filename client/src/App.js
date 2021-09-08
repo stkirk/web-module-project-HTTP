@@ -10,10 +10,12 @@ import EditMovieForm from "./components/EditMovieForm";
 import FavoriteMovieList from "./components/FavoriteMovieList";
 
 import axios from "axios";
+import AddMovieForm from "./components/AddMovieForm";
 
 const App = (props) => {
   const [movies, setMovies] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     axios
@@ -48,13 +50,17 @@ const App = (props) => {
       </nav>
 
       <div className="container">
-        <MovieHeader />
+        <MovieHeader setIsAdding={setIsAdding} />
         <div className="row ">
           <FavoriteMovieList favoriteMovies={favoriteMovies} />
 
           <Switch>
             <Route path="/movies/edit/:id">
               <EditMovieForm setMovies={setMovies} />
+            </Route>
+
+            <Route path="/movies/add">
+              <AddMovieForm setMovies={setMovies} />
             </Route>
 
             <Route path="/movies/:id">
